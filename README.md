@@ -28,11 +28,9 @@ https://gbf.game.mbga.jp/*
 
 ## Installation
 
-1. Install Tampermonkey.
-2. Create a new userscript.
-3. Replace the default contents with the script below.
-4. Save the script.
-5. Reload Granblue Fantasy.
+1. Install [Tampermonkey](https://www.tampermonkey.net/)
+2. Click **[Install GBF Contribution Notification](https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/gbf-contribution-notification.user.js)**
+3. Click **Install** in Tampermonkey
 
 
 ## Usage
