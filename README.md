@@ -34,20 +34,129 @@ https://gbf.game.mbga.jp/*
 4. Save the script.
 5. Reload Granblue Fantasy.
 
-## Userscript
+
+## Usage
+
+Open Granblue Fantasy and enter a multiplayer raid.
+
+Click the **Tampermonkey** extension icon and select:
+
+```text
+Set contribution target (...)
+```
+
+Enter the amount of contribution you want to reach.
+
+For example:
+
+```text
+2000000
+```
+
+or:
+
+```text
+2,000,000
+```
+
+Both formats are accepted.
+
+Once your contribution reaches or exceeds the target, you will receive a desktop notification.
+
+Example:
+
+```text
+GBF Contribution Target Reached
+
+2,083,421 contribution
+Target: 2,000,000
+```
+
+The notification is only sent once for each raid.
+
+Starting a new raid automatically resets the notification state.
+
+## Menu Commands
+
+### Set contribution target
+
+Changes and saves the contribution target.
+
+The value persists after refreshing GBF or restarting the browser.
+
+### Show current contribution target
+
+Displays the currently configured contribution target.
+
+### Test notification
+
+Immediately sends a test notification.
+
+Use this to verify that Chrome and your operating system allow Tampermonkey notifications.
+
+## How It Works
+
+Granblue Fantasy keeps information about the current raid participants in its page-side JavaScript state.
+
+The script reads:
 
 ```javascript
-// ==UserScript==
-// @name         GBF Contribution Notification
-// @namespace    gbf-contribution-notification
-// @version      1.0.1
-// @description  Notify when your contribution in the current GBF raid reaches a configurable target.
-// @match        https://game.granbluefantasy.jp/*
-// @match        https://gbf.game.mbga.jp/*
-// @grant        unsafeWindow
-// @grant        GM_notification
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM_registerMenuCommand
-// ==/UserScript
+unsafeWindow.stage?.pJsnData?.multi_raid_member_info
 ```
+
+A raid member entry contains data similar to:
+
+```javascript
+{
+    user_id: "...",
+    nickname: "...",
+    point: "...",
+    rank: ...
+}
+```
+
+The script identifies the current player's entry and reads:
+
+```javascript
+member.point
+```
+
+The contribution value is checked once per second.
+
+The script does **not** send additional API requests or calculate contribution from damage.
+
+## Console Output
+
+Console logging is intentionally minimal.
+
+When the script loads:
+
+```text
+[GBF Contribution] Loaded. Target: 1,000,000
+```
+
+When the target is changed:
+
+```text
+[GBF Contribution] Target set to 2,000,000
+```
+
+When the target is reached:
+
+```text
+[GBF Contribution] Target reached: 2,083,421
+```
+
+## Notes
+
+* The GBF battle page must remain open.
+* The tab does not need to remain focused.
+* Desktop notifications must be allowed by your browser and operating system.
+* The script relies on internal Granblue Fantasy page data rather than an official public API.
+* Future GBF updates may change the internal battle data structure and require adjustments to the script.
+
+## Disclaimer
+
+This is an unofficial userscript and is not affiliated with Cygames or Granblue Fantasy.
+
+Use it at your own discretion.
