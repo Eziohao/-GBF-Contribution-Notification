@@ -1,5 +1,3 @@
-# -GBF-Contribution-Notification
-Notify when your contribution in the current GBF raid reaches a configurable target.
 # GBF Contribution Notification
 
 A lightweight Tampermonkey userscript for **Granblue Fantasy** that sends a desktop notification when your contribution in the currently open raid reaches a configurable target.
